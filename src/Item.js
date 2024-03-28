@@ -1,24 +1,11 @@
-// import React from 'react';
-
-// export default function Item({ item }) {
-//   return (
-//     <div>
-//       {item.name}
-//     </div>
-//   );
-// }
-
 import React from 'react';
 
-function Item({ item, onClick }) {
+export default function Item({ item }) {
   return (
-    <li className="mb-3 d-flex align-items-center justify-content-between border p-3">
-      <div> {item.name} </div>
-      <button className="button" onClick={onClick}>
-        Open Popup
-      </button>
-    </li>
+    <div>
+      {item.name}
+    </div>
   );
 }
 
-export default Item;
+

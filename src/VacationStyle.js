@@ -113,8 +113,12 @@ function VacationStyle( {onNextClick, onHomeClick} ) {
                                           {...provided.draggableProps}
                                           {...provided.dragHandleProps}
                                         >
-                                          <Item item={item} />
-
+                                          <li className="mb-3 d-flex align-items-center justify-content-between border p-3">
+                                            <Item item={item} />
+                                            {/* <button className="btn btn-dark"> */}
+                                              <Popup_Content/>
+                                            {/* </button> */}
+                                          </li>
                                         </div>
                                       )}
                                     </Draggable>

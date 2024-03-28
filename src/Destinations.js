@@ -4,7 +4,7 @@ import Item from './Item';
 import './style.css';
 
 
-function Destinations( {onBackClick, onHomeClick} ) {
+function Destinations( {onBackClick, onHomeClick, onNextClick} ) {
   const [categories, setCategories] = useState([
     { id: 1, name: 'Preferences' },
     { id: 2, name: 'Options' },
@@ -26,6 +26,10 @@ function Destinations( {onBackClick, onHomeClick} ) {
 
   const handleHomeClick = () => {
     onHomeClick();
+  }
+
+  const handleNextClick = () => {
+    onNextClick();
   }
 
   const onDragEnd = (result) => {
@@ -72,6 +76,7 @@ function Destinations( {onBackClick, onHomeClick} ) {
       <h1> Where Do You Want To Go? </h1> 
       <button onClick={handleHomeClick}>Home</button>
       <button onClick={handleBackClick}>Back: Vacation Ventures</button>
+      <button onClick={handleNextClick}>Next: See My Itineraries!</button>
       <DragDropContext onDragEnd={onDragEnd}>
         <div>
           <Droppable droppableId="Categories" type="droppableItem">

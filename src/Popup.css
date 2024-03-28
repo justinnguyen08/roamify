@@ -48,6 +48,14 @@
     margin-bottom: 50px;
 }
 
+.modal {
+    z-index: 10000 !important;
+}
+
+.popup_overlay {
+    z-index: 1;
+}
+
 .close {
     font-weight: bold;
     color: red;
