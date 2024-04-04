@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Item from './Item';
 import './style.css';
 
-function Ventures( {onHomeClick, onBackClick, onNextClick} ) {
+function Ventures({ onHomeClick, onBackClick, onNextClick }) {
   const [categories, setCategories] = useState([
     { id: 1, name: 'Preferences' },
     { id: 2, name: 'Options' },
@@ -35,45 +35,45 @@ function Ventures( {onHomeClick, onBackClick, onNextClick} ) {
   const onDragEnd = (result) => {
     const { source, destination } = result;
 
-  if (!destination) {
-    return;
-  }
+    if (!destination) {
+      return;
+    }
 
-  const sourceCategory = parseInt(source.droppableId);
-  const destinationCategory = parseInt(destination.droppableId);
-  const draggedItemId = parseInt(result.draggableId);
+    const sourceCategory = parseInt(source.droppableId);
+    const destinationCategory = parseInt(destination.droppableId);
+    const draggedItemId = parseInt(result.draggableId);
 
-  if (sourceCategory === destinationCategory) {
-    setItems(prevItems => {
-      const draggedItem = prevItems.find(item => item.id === draggedItemId);
+    if (sourceCategory === destinationCategory) {
+      setItems(prevItems => {
+        const draggedItem = prevItems.find(item => item.id === draggedItemId);
 
-      const remainingItems = prevItems.filter(item => item.id !== draggedItemId);
+        const remainingItems = prevItems.filter(item => item.id !== draggedItemId);
 
-      const updatedItems = [
-        ...remainingItems.slice(0, destination.index),
-        draggedItem,
-        ...remainingItems.slice(destination.index)
-      ];
+        const updatedItems = [
+          ...remainingItems.slice(0, destination.index),
+          draggedItem,
+          ...remainingItems.slice(destination.index)
+        ];
 
-      return updatedItems;
-    });
-  } else {
-    setItems(prevItems =>
-      prevItems.map(item =>
-        item.id === draggedItemId
-          ? {
+        return updatedItems;
+      });
+    } else {
+      setItems(prevItems =>
+        prevItems.map(item =>
+          item.id === draggedItemId
+            ? {
               ...item,
               category: destinationCategory,
             }
-          : item
-      )
-    );
-  }
-};
+            : item
+        )
+      );
+    }
+  };
 
   return (
     <div className="container py-5">
-      <h1> What Are Your Top Vacation Ventures? </h1> 
+      <h1> What Are Your Top Vacation Ventures? </h1>
       <button onClick={handleHomeClick}>Home</button>
       <button onClick={handleBackClick}>Back: Vacation Style</button>
       <button onClick={handleNextClick}>Next: Destinations</button>

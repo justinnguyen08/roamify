@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import VacationStyle from './VacationStyle';
-import Ventures from './Ventures';
-import Destinations from './Destinations';
-import SettingsPage from './SettingsPage';
-import ItineraryList from './ItineraryList';
+import VacationStyle from './Components/VacationStyle';
+import Ventures from './Components/Ventures';
+import Destinations from './Components/Destinations';
+import SettingsPage from './Components/SettingsPage';
+import ItineraryList from './Components/ItineraryList';
 
 
 const App = () => {
