@@ -1,0 +1,89 @@
+.Popup {
+    background-color: rgba(64, 205, 224, 0.59);
+    max-width: 70vw;
+    max-height: 80vh;
+    padding-bottom: 20px;
+    box-shadow: 5px 5px 5px gray;
+    font-family: 'Roboto', sans-serif;
+    overflow-y: auto;
+}
+
+.Popup a {
+    text-decoration: none;
+    font-size: 25px;
+    float: right;
+    margin-right: 5px;
+}
+
+.Popup h2 {
+    margin-left: 5px;
+}
+
+.popup_header {
+    text-align: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 50px
+}
+
+.popup_border {
+    border-color: black;
+    border-style: dashed;
+    background-color: lightgray;
+    box-shadow: 5px 5px 5px gray;
+    margin: 20px;
+}
+
+.popup_close {
+    color: red;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.popup_description_text {
+    padding-left: 10px;
+}
+
+.last_element_temp {
+    margin-bottom: 50px;
+}
+
+.modal {
+    z-index: 10000 !important;
+}
+
+.popup_overlay {
+    z-index: 1;
+}
+
+.close {
+    font-weight: bold;
+    color: red;
+    border-style: dashed;
+}
+
+/* animation from https://react-popup.elazizi.com/react-popup-animation */
+
+@keyframes anvil {
+    0% {
+        transform: scale(1) translateY(0px);
+        opacity: 0;
+        box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+    }
+
+    1% {
+        transform: scale(0.96) translateY(10px);
+        opacity: 0;
+        box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+    }
+
+    100% {
+        transform: scale(1) translateY(0px);
+        opacity: 1;
+        box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+    }
+}
+
+.popup-content {
+    -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}

@@ -1,0 +1,46 @@
+.itinerary-list {
+    width: 300px; 
+    margin: auto;
+    background-color: #f3f3f3;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ececec;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .itinerary-item {
+    margin: 20px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .itinerary-item h2 {
+    color: #333;
+    font-size: 18px;
+  }
+  
+  .itinerary-image {
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+  }
+  
+  .itinerary-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .itinerary-button:hover {
+    background-color: #0056b3;
+  }

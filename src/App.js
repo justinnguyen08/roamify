@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import VacationStyle from './VacationStyle';
+import Ventures from './Ventures';
+import Destinations from './Destinations';
+import SettingsPage from './SettingsPage';
+import ItineraryList from './ItineraryList';
 
-function App() {
+
+const App = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const styleClick = () => {
+    setCurrentPage('vacation-style');
+  };
+
+  const ventureClick = () => {
+    setCurrentPage('ventures');
+  };
+
+  const destClick = () => {
+    setCurrentPage('destinations');
+  };
+
+  const handleHomeClick = () => {
+    setCurrentPage('home');
+  };
+
+  const handleSettingsClick = () => {
+    setCurrentPage('settings');
+  };
+
+  const itineraryClick = () => {
+    setCurrentPage('itineraries');
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {currentPage === 'home' && (
+        <button onClick={handleSettingsClick}>Settings</button>
+      )}
+
+      {currentPage === 'home' && (
+        <div>
+          <h1>Home</h1>
+          <button onClick={styleClick}>Let's Start: Vacation Style!</button>
+        </div>
+      )}
+      {currentPage === 'vacation-style' && <VacationStyle onNextClick={ventureClick} onHomeClick={handleHomeClick} />}
+      {currentPage === 'ventures' && <Ventures onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} />}
+      {currentPage === 'destinations' && <Destinations onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick}/>}
+      {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick}/>}
+      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick}/>}
     </div>
   );
-}
+};
 
 export default App;
