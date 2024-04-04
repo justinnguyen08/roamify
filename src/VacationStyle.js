@@ -3,9 +3,8 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Item from './Item';
 import './style.css';
 import Popup_Content from './Popup_Content';
-import Popup from 'reactjs-popup';
 
-function VacationStyle( {onNextClick, onHomeClick} ) {
+function VacationStyle({ onNextClick, onHomeClick }) {
   const [categories, setCategories] = useState([
     { id: 1, name: 'Preferences' },
     { id: 2, name: 'Options' },
@@ -18,9 +17,12 @@ function VacationStyle( {onNextClick, onHomeClick} ) {
     { id: 5, name: 'nature', category: 2 },
     { id: 6, name: 'beach', category: 2 },
   ]);
+  const [moreInfo, setInfo] = useState([
+    { id: 1, name: 'historical', locations: ['Rome, Italy', 'Athens, Greece', 'Cairo, Egypt'], images: ['logo512.png'], description: 'From the cradle of civilization to the streets of silicon valley. Learn about the people and locations that drove humanity forward. ' }
+  ])
 
   const handleNextClick = () => {
-    onNextClick(); 
+    onNextClick();
   };
 
   const handleHomeClick = () => {
@@ -30,45 +32,45 @@ function VacationStyle( {onNextClick, onHomeClick} ) {
   const onDragEnd = (result) => {
     const { source, destination } = result;
 
-  if (!destination) {
-    return;
-  }
+    if (!destination) {
+      return;
+    }
 
-  const sourceCategory = parseInt(source.droppableId);
-  const destinationCategory = parseInt(destination.droppableId);
-  const draggedItemId = parseInt(result.draggableId);
+    const sourceCategory = parseInt(source.droppableId);
+    const destinationCategory = parseInt(destination.droppableId);
+    const draggedItemId = parseInt(result.draggableId);
 
-  if (sourceCategory === destinationCategory) {
-    setItems(prevItems => {
-      const draggedItem = prevItems.find(item => item.id === draggedItemId);
+    if (sourceCategory === destinationCategory) {
+      setItems(prevItems => {
+        const draggedItem = prevItems.find(item => item.id === draggedItemId);
 
-      const remainingItems = prevItems.filter(item => item.id !== draggedItemId);
+        const remainingItems = prevItems.filter(item => item.id !== draggedItemId);
 
-      const updatedItems = [
-        ...remainingItems.slice(0, destination.index),
-        draggedItem,
-        ...remainingItems.slice(destination.index)
-      ];
+        const updatedItems = [
+          ...remainingItems.slice(0, destination.index),
+          draggedItem,
+          ...remainingItems.slice(destination.index)
+        ];
 
-      return updatedItems;
-    });
-  } else {
-    setItems(prevItems =>
-      prevItems.map(item =>
-        item.id === draggedItemId
-          ? {
+        return updatedItems;
+      });
+    } else {
+      setItems(prevItems =>
+        prevItems.map(item =>
+          item.id === draggedItemId
+            ? {
               ...item,
               category: destinationCategory,
             }
-          : item
-      )
-    );
-  }
-};
+            : item
+        )
+      );
+    }
+  };
 
   return (
     <div className="container py-5">
-      <h1> What's Your Vacation Style? </h1> 
+      <h1> What's Your Vacation Style? </h1>
       <button onClick={handleHomeClick}>Home</button>
       <button onClick={handleNextClick}>Next: Vacation Ventures</button>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -116,7 +118,7 @@ function VacationStyle( {onNextClick, onHomeClick} ) {
                                           <li className="mb-3 d-flex align-items-center justify-content-between border p-3">
                                             <Item item={item} />
                                             {/* <button className="btn btn-dark"> */}
-                                              <Popup_Content/>
+                                            <Popup_Content />
                                             {/* </button> */}
                                           </li>
                                         </div>

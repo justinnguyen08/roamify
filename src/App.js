@@ -48,9 +48,9 @@ const App = () => {
       )}
       {currentPage === 'vacation-style' && <VacationStyle onNextClick={ventureClick} onHomeClick={handleHomeClick} />}
       {currentPage === 'ventures' && <Ventures onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} />}
-      {currentPage === 'destinations' && <Destinations onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick}/>}
-      {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick}/>}
-      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick}/>}
+      {currentPage === 'destinations' && <Destinations onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick} />}
+      {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick} />}
+      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} />}
     </div>
   );
 };
