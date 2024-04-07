@@ -1,6 +1,5 @@
-import React from 'react';
-import './ItineraryList.css'; 
-
+import React from "react";
+import "./ItineraryList.css";
 
 function ItineraryItem({ destination, imageUrl }) {
   return (
@@ -15,22 +14,29 @@ function ItineraryItem({ destination, imageUrl }) {
   );
 }
 
-function ItineraryList( {onBackClick} ) {
+function ItineraryList({ onBackClick, onNextClick }) {
   const itineraries = [
-    { destination: 'Costa Rica', imageUrl: 'costaRicaImage.jpg' },
-    { destination: 'Cancún', imageUrl: 'cancun.jpg' },
-    { destination: 'Bahamas', imageUrl: 'bahamas.jpg' },
+    { destination: "Costa Rica", imageUrl: "costaRicaImage.jpg" },
+    { destination: "Cancún", imageUrl: "cancun.jpg" },
+    { destination: "Bahamas", imageUrl: "bahamas.jpg" },
   ];
 
   const handleBackClick = () => {
     onBackClick();
-  }
+  };
+
+  const handleNextClick = () => {
+    onNextClick();
+  };
 
   return (
     <div className="itinerary-list">
-    <button onClick={handleBackClick}>Back: Vacation Ventures</button>
+      <button onClick={handleBackClick}>Back: Vacation Ventures</button>
+      <button onClick={handleNextClick}>Itinerary Page</button>
       <div className="header">
-        <p>BASED ON YOUR GROUP'S RANKINGS, HERE ARE OUR RECOMMENDED ITINERARIES!</p>
+        <p>
+          BASED ON YOUR GROUP'S RANKINGS, HERE ARE OUR RECOMMENDED ITINERARIES!
+        </p>
       </div>
       {itineraries.map((itinerary, index) => (
         <ItineraryItem key={index} {...itinerary} />

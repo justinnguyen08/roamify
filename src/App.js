@@ -1,56 +1,84 @@
-import React, { useState } from 'react';
-import VacationStyle from './Components/VacationStyle';
-import Ventures from './Components/Ventures';
-import Destinations from './Components/Destinations';
-import SettingsPage from './Components/SettingsPage';
-import ItineraryList from './Components/ItineraryList';
-
-
+import React, { useState } from "react";
+import VacationStyle from "./Components/VacationStyle";
+import Ventures from "./Components/Ventures";
+import Destinations from "./Components/Destinations";
+import SettingsPage from "./Components/SettingsPage";
+import ItineraryList from "./Components/ItineraryList";
+import GPT from "./Components/gpt";
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState("home");
 
   const styleClick = () => {
-    setCurrentPage('vacation-style');
+    setCurrentPage("vacation-style");
   };
 
   const ventureClick = () => {
-    setCurrentPage('ventures');
+    setCurrentPage("ventures");
   };
 
   const destClick = () => {
-    setCurrentPage('destinations');
+    setCurrentPage("destinations");
   };
 
   const handleHomeClick = () => {
-    setCurrentPage('home');
+    setCurrentPage("home");
   };
 
   const handleSettingsClick = () => {
-    setCurrentPage('settings');
+    setCurrentPage("settings");
   };
 
   const itineraryClick = () => {
-    setCurrentPage('itineraries');
-  }
+    setCurrentPage("itineraries");
+  };
 
+  const firstItineraryClick = () => {
+    setCurrentPage("firstItineraries");
+  };
 
   return (
     <div>
-      {currentPage === 'home' && (
+      {currentPage === "home" && (
         <button onClick={handleSettingsClick}>Settings</button>
       )}
-
-      {currentPage === 'home' && (
+      {currentPage === "home" && (
         <div>
           <h1>Home</h1>
           <button onClick={styleClick}>Let's Start: Vacation Style!</button>
         </div>
       )}
-      {currentPage === 'vacation-style' && <VacationStyle onNextClick={ventureClick} onHomeClick={handleHomeClick} />}
-      {currentPage === 'ventures' && <Ventures onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} />}
-      {currentPage === 'destinations' && <Destinations onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick} />}
-      {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick} />}
-      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} />}
+      {currentPage === "vacation-style" && (
+        <VacationStyle
+          onNextClick={ventureClick}
+          onHomeClick={handleHomeClick}
+        />
+      )}
+      {currentPage === "ventures" && (
+        <Ventures
+          onBackClick={styleClick}
+          onHomeClick={handleHomeClick}
+          onNextClick={destClick}
+        />
+      )}
+      {currentPage === "destinations" && (
+        <Destinations
+          onBackClick={ventureClick}
+          onHomeClick={handleHomeClick}
+          onNextClick={itineraryClick}
+        />
+      )}
+      {currentPage === "settings" && (
+        <SettingsPage onBackClick={handleHomeClick} />
+      )}
+      {currentPage === "itineraries" && (
+        <ItineraryList
+          onBackClick={destClick}
+          onNextClick={firstItineraryClick}
+        />
+      )}
+      {currentPage === "firstItineraries" && (
+        <GPT onBackClick={destClick}></GPT>
+      )}
     </div>
   );
 };
