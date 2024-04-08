@@ -1,8 +1,33 @@
 import React, { useState, useEffect } from "react";
 const { Configuration, OpenAI } = require("openai");
 
-function GPT({ onBackClick }) {
+function GPT({ onBackClick, userPreferences }) {
   const [gptResponse, setGptResponse] = useState("");
+  function formatUserPreferences(preferences) {
+    let formattedString = "Rankings:\n\n";
+    
+    // Assuming each preference array contains objects with a 'name' property
+    if (preferences.vacationStylePreferences.length) {
+      formattedString += "Location: ";
+      formattedString += preferences.vacationStylePreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
+      formattedString += "\n";
+    }
+  
+    if (preferences.venturesPreferences.length) {
+      formattedString += "Activities: ";
+      formattedString += preferences.venturesPreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
+      formattedString += "\n";
+    }
+
+    if (preferences.destinationsPreferences.length) {
+      formattedString += "Activities: ";
+      formattedString += preferences.destinationsPreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
+      formattedString += "\n";
+    }
+    
+    return formattedString;
+  }
+  
   const [data, setPageData] = useState({
     itinerary: {
       city: "Cape Town",
@@ -76,11 +101,12 @@ function GPT({ onBackClick }) {
   };
 
   const openai = new OpenAI({
-    apiKey: "API KEY HERE",
+    apiKey: "Put key here",
     dangerouslyAllowBrowser: true,
   });
 
   async function fetchResponse() {
+    const preferences = formatUserPreferences(userPreferences);
     const completion = await openai.chat.completions.create({
       messages: [
         {
@@ -90,8 +116,7 @@ function GPT({ onBackClick }) {
         },
         {
           role: "user",
-          content:
-            "Rankings: \n\nLocation:  1st- Tropical, 2nd- City, 3rd- Beach\nActivities: 1st- Hiking, 2nd- Nightlife, 3rd-Swimming",
+          content: preferences,
         },
       ],
       model: "gpt-3.5-turbo",
@@ -101,12 +126,14 @@ function GPT({ onBackClick }) {
       frequency_penalty: 0,
       presence_penalty: 0,
     });
+    console.log(preferences)
     setGptResponse(completion.choices[0].message.content);
     setPageData(JSON.parse(completion.choices[0].message.content));
     console.log("Ran once");
     console.log(completion.choices[0].message.content);
   }
   return (
+    
     <div className="itinerary">
       <button onClick={handleBackClick}>Go Home</button>
       <h1>Itinerary for {data.itinerary.city}</h1>

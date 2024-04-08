@@ -64,6 +64,12 @@ const App = () => {
     { id: 8, name: 'Aruba', category: 2 },
   ]);
 
+  const userPreferences = {
+    vacationStylePreferences: vacationStyleItems.filter(item => item.category === 1),
+    venturesPreferences: venturesItems.filter(item => item.category === 1),
+    destinationsPreferences: destinationsItems.filter(item => item.category === 1),
+  };
+
 
   return (
     <div>
@@ -82,7 +88,7 @@ const App = () => {
       {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick} />}
       {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick}/>}
       {currentPage === "firstItineraries" && (
-        <GPT onBackClick={destClick}></GPT>
+        <GPT onBackClick={destClick} userPreferences={userPreferences}></GPT> 
       )}
     </div>
   );
