@@ -2,21 +2,12 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Item from './Item';
 import './style.css';
+import Popup_Content from './Popup_Content';
 
-function Ventures({ onHomeClick, onBackClick, onNextClick }) {
+function Ventures({ items, setItems, onHomeClick, onBackClick, onNextClick }) {
   const [categories, setCategories] = useState([
     { id: 1, name: 'Preferences' },
     { id: 2, name: 'Options' },
-  ]);
-  const [items, setItems] = useState([
-    { id: 1, name: 'surfing', category: 2 },
-    { id: 2, name: 'snorkeling', category: 2 },
-    { id: 3, name: 'swimming', category: 2 },
-    { id: 4, name: 'ziplining', category: 2 },
-    { id: 5, name: 'hiking', category: 2 },
-    { id: 6, name: 'nightlife', category: 2 },
-    { id: 7, name: 'kayaking', category: 2 },
-    { id: 8, name: 'sightseeing', category: 2 },
   ]);
 
   const handleBackClick = () => {
@@ -82,11 +73,11 @@ function Ventures({ onHomeClick, onBackClick, onNextClick }) {
           <Droppable droppableId="Categories" type="droppableItem">
             {(provided) => (
               <div ref={provided.innerRef}>
-                {categories.map((category, index) => (
+                {categories.map((category, categoryIndex) => (
                   <Draggable
                     draggableId={`category-${category.id}`}
                     key={`category-${category.id}`}
-                    index={index}
+                    index={categoryIndex}
                   >
                     {(parentProvider) => (
                       <div
@@ -104,14 +95,12 @@ function Ventures({ onHomeClick, onBackClick, onNextClick }) {
                                   {category.name}
                                 </h6>
                                 {items
-                                  .filter(
-                                    (item) => item.category === category.id
-                                  )
-                                  .map((item, index) => (
+                                  .filter(item => item.category === category.id)
+                                  .map((item, itemIndex) => (
                                     <Draggable
                                       draggableId={item.id.toString()}
                                       key={item.id}
-                                      index={index}
+                                      index={itemIndex}
                                     >
                                       {(provided) => (
                                         <div
@@ -120,10 +109,12 @@ function Ventures({ onHomeClick, onBackClick, onNextClick }) {
                                           {...provided.dragHandleProps}
                                         >
                                           <li className="mb-3 d-flex align-items-center justify-content-between border p-3">
+                                            {/* Conditionally display rank for items in "Preferences" */}
+                                            {category.name === 'Preferences' && (
+                                              <span className="rank-badge">{itemIndex + 1}</span>
+                                            )}
                                             <Item item={item} />
-                                            <button className="btn btn-dark">
-                                              ...
-                                            </button>
+                                            <Popup_Content />
                                           </li>
                                         </div>
                                       )}

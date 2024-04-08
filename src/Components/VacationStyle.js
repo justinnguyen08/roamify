@@ -1,25 +1,88 @@
+// import React, { useState } from 'react';
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+// import Item from './Item';
+// import './style.css';
+// import Popup_Content from './Popup_Content';
+
+// function VacationStyle({ items, setItems, onNextClick, onHomeClick }) {
+//   const [categories, setCategories] = useState([
+//     { id: 1, name: 'Preferences' },
+//     { id: 2, name: 'Options' },
+//   ]);
+  // const [items, setItems] = useState([
+  //   { id: 1, name: 'historical', category: 2 },
+  //   { id: 2, name: 'tropical', category: 2 },
+  //   { id: 3, name: 'snowy', category: 2 },
+  //   { id: 4, name: 'city', category: 2 },
+  //   { id: 5, name: 'nature', category: 2 },
+  //   { id: 6, name: 'beach', category: 2 },
+  // ]);
+//   const [moreInfo, setInfo] = useState([
+//     { id: 1, name: 'historical', locations: ['Rome, Italy', 'Athens, Greece', 'Cairo, Egypt'], images: ['logo512.png'], description: 'From the cradle of civilization to the streets of silicon valley. Learn about the people and locations that drove humanity forward. ' }
+//   ])
+
+//   const handleNextClick = () => {
+//     onNextClick();
+//   };
+
+//   const handleHomeClick = () => {
+//     onHomeClick();
+//   }
+
+//   const onDragEnd = (result) => {
+//     const { source, destination } = result;
+
+//     if (!destination) {
+//       return;
+//     }
+
+//     const sourceCategory = parseInt(source.droppableId);
+//     const destinationCategory = parseInt(destination.droppableId);
+//     const draggedItemId = parseInt(result.draggableId);
+
+//     if (sourceCategory === destinationCategory) {
+//       setItems(prevItems => {
+//         const draggedItem = prevItems.find(item => item.id === draggedItemId);
+
+//         const remainingItems = prevItems.filter(item => item.id !== draggedItemId);
+
+//         const updatedItems = [
+//           ...remainingItems.slice(0, destination.index),
+//           draggedItem,
+//           ...remainingItems.slice(destination.index)
+//         ];
+
+//         return updatedItems;
+//       });
+//     } else {
+//       setItems(prevItems =>
+//         prevItems.map(item =>
+//           item.id === draggedItemId
+//             ? {
+//               ...item,
+//               category: destinationCategory,
+//             }
+//             : item
+//         )
+//       );
+//     }
+//   };
+
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Item from './Item';
 import './style.css';
 import Popup_Content from './Popup_Content';
 
-function VacationStyle({ onNextClick, onHomeClick }) {
+function VacationStyle({ items, setItems, onNextClick, onHomeClick }) {
   const [categories, setCategories] = useState([
     { id: 1, name: 'Preferences' },
     { id: 2, name: 'Options' },
   ]);
-  const [items, setItems] = useState([
-    { id: 1, name: 'historical', category: 2 },
-    { id: 2, name: 'tropical', category: 2 },
-    { id: 3, name: 'snowy', category: 2 },
-    { id: 4, name: 'city', category: 2 },
-    { id: 5, name: 'nature', category: 2 },
-    { id: 6, name: 'beach', category: 2 },
-  ]);
+  
   const [moreInfo, setInfo] = useState([
     { id: 1, name: 'historical', locations: ['Rome, Italy', 'Athens, Greece', 'Cairo, Egypt'], images: ['logo512.png'], description: 'From the cradle of civilization to the streets of silicon valley. Learn about the people and locations that drove humanity forward. ' }
-  ])
+  ]);
 
   const handleNextClick = () => {
     onNextClick();
@@ -27,8 +90,9 @@ function VacationStyle({ onNextClick, onHomeClick }) {
 
   const handleHomeClick = () => {
     onHomeClick();
-  }
+  };
 
+  // Your onDragEnd logic remains the same, utilizing setItems to update the items array
   const onDragEnd = (result) => {
     const { source, destination } = result;
 
@@ -43,9 +107,7 @@ function VacationStyle({ onNextClick, onHomeClick }) {
     if (sourceCategory === destinationCategory) {
       setItems(prevItems => {
         const draggedItem = prevItems.find(item => item.id === draggedItemId);
-
         const remainingItems = prevItems.filter(item => item.id !== draggedItemId);
-
         const updatedItems = [
           ...remainingItems.slice(0, destination.index),
           draggedItem,
@@ -58,15 +120,13 @@ function VacationStyle({ onNextClick, onHomeClick }) {
       setItems(prevItems =>
         prevItems.map(item =>
           item.id === draggedItemId
-            ? {
-              ...item,
-              category: destinationCategory,
-            }
+            ? { ...item, category: destinationCategory }
             : item
         )
       );
     }
   };
+
 
   return (
     <div className="container py-5">
@@ -78,11 +138,11 @@ function VacationStyle({ onNextClick, onHomeClick }) {
           <Droppable droppableId="Categories" type="droppableItem">
             {(provided) => (
               <div ref={provided.innerRef}>
-                {categories.map((category, index) => (
+                {categories.map((category, categoryIndex) => (
                   <Draggable
                     draggableId={`category-${category.id}`}
                     key={`category-${category.id}`}
-                    index={index}
+                    index={categoryIndex}
                   >
                     {(parentProvider) => (
                       <div
@@ -100,14 +160,12 @@ function VacationStyle({ onNextClick, onHomeClick }) {
                                   {category.name}
                                 </h6>
                                 {items
-                                  .filter(
-                                    (item) => item.category === category.id
-                                  )
-                                  .map((item, index) => (
+                                  .filter(item => item.category === category.id)
+                                  .map((item, itemIndex) => (
                                     <Draggable
                                       draggableId={item.id.toString()}
                                       key={item.id}
-                                      index={index}
+                                      index={itemIndex}
                                     >
                                       {(provided) => (
                                         <div
@@ -116,10 +174,12 @@ function VacationStyle({ onNextClick, onHomeClick }) {
                                           {...provided.dragHandleProps}
                                         >
                                           <li className="mb-3 d-flex align-items-center justify-content-between border p-3">
+                                            {/* Conditionally display rank for items in "Preferences" */}
+                                            {category.name === 'Preferences' && (
+                                              <span className="rank-badge">{itemIndex + 1}</span>
+                                            )}
                                             <Item item={item} />
-                                            {/* <button className="btn btn-dark"> */}
                                             <Popup_Content />
-                                            {/* </button> */}
                                           </li>
                                         </div>
                                       )}
@@ -134,6 +194,7 @@ function VacationStyle({ onNextClick, onHomeClick }) {
                     )}
                   </Draggable>
                 ))}
+
 
                 {provided.placeholder}
               </div>
