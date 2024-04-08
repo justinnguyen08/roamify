@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Item from './Item';
-import './style.css';
 import Popup_Content from './Popup_Content';
+import './rankings.css'
 
 
-function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick }) {
+function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick, addVacationDestination }) {
   const [categories, setCategories] = useState([
     { id: 1, name: 'Preferences' },
     { id: 2, name: 'Options' },
@@ -21,6 +21,10 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick }
 
   const handleNextClick = () => {
     onNextClick();
+  }
+
+  const addVacationDestinationClick = (name) => {
+    addVacationDestination(name);
   }
 
   const onDragEnd = (result) => {
@@ -64,15 +68,19 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick }
 
   return (
     <div className="container py-5">
-      <h1> Where Do You Want To Go? </h1>
-      <button onClick={handleHomeClick}>Home</button>
-      <button onClick={handleBackClick}>Back: Vacation Ventures</button>
-      <button onClick={handleNextClick}>Next: See My Itineraries!</button>
+      <div className='d-flex justify-content-between'>
+        <button onClick={handleHomeClick}>Home</button>
+        <button onClick={handleBackClick}>Back: Vacation Ventures</button>
+        <button onClick={handleNextClick}>Next: See My Itineraries!</button>
+      </div>
+      <h1 className='mainHeader'> Vacation Location</h1>
+
       <DragDropContext onDragEnd={onDragEnd}>
-        <div>
+        <div className='mainContent'>
+        <h2 className='tagline'>DRAG AND DROP YOUR TOP LOCATIONS</h2>
           <Droppable droppableId="Categories" type="droppableItem">
             {(provided) => (
-              <div ref={provided.innerRef}>
+              <div ref={provided.innerRef} className='dragAndDropHolder'>
                 {categories.map((category, categoryIndex) => (
                   <Draggable
                     draggableId={`category-${category.id}`}
@@ -83,11 +91,21 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick }
                       <div
                         ref={parentProvider.innerRef}
                         {...parentProvider.draggableProps}
+                        className='prefAndOptions'
                       >
                         <Droppable droppableId={category.id.toString()}>
                           {(provided) => (
                             <div ref={provided.innerRef}>
                               <ul className="list-unstyled border p-3 mb-3">
+                                {category.name == 'Options' && (
+                                  <div className="inputContainer">
+                                    <input type="text" id="inputField" placeholder='Add Your Own Locations' />
+                                    <button onClick={() => {
+                                      const input = document.getElementById('newDestinationName').value;
+                                      addVacationDestinationClick(input);
+                                    }}>+</button>
+                                  </div>
+                                )}
                                 <h6
                                   className="h6 mb-3"
                                   {...parentProvider.dragHandleProps}
@@ -108,7 +126,7 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick }
                                           {...provided.draggableProps}
                                           {...provided.dragHandleProps}
                                         >
-                                          <li className="mb-3 d-flex align-items-center justify-content-between border p-3">
+                                          <li className="mb-3 d-flex align-items-center justify-content-between border p-3 option ">
                                             {/* Conditionally display rank for items in "Preferences" */}
                                             {category.name === 'Preferences' && (
                                               <span className="rank-badge">{itemIndex + 1}</span>

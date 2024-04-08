@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
+import './gpt.css'
 const { Configuration, OpenAI } = require("openai");
 
 function GPT({ onBackClick, userPreferences }) {
   const [gptResponse, setGptResponse] = useState("");
   function formatUserPreferences(preferences) {
     let formattedString = "Rankings:\n\n";
-    
+
     // Assuming each preference array contains objects with a 'name' property
     if (preferences.vacationStylePreferences.length) {
       formattedString += "Location: ";
       formattedString += preferences.vacationStylePreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
       formattedString += "\n";
     }
-  
+
     if (preferences.venturesPreferences.length) {
       formattedString += "Activities: ";
       formattedString += preferences.venturesPreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
@@ -24,10 +25,11 @@ function GPT({ onBackClick, userPreferences }) {
       formattedString += preferences.destinationsPreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
       formattedString += "\n";
     }
-    
+
     return formattedString;
   }
-  
+
+
   const [data, setPageData] = useState({
     itinerary: {
       city: "Cape Town",
@@ -133,23 +135,25 @@ function GPT({ onBackClick, userPreferences }) {
     console.log(completion.choices[0].message.content);
   }
   return (
-    
+
     <div className="itinerary">
       <button onClick={handleBackClick}>Go Home</button>
       <h1>Itinerary for {data.itinerary.city}</h1>
-      {data.itinerary.days.map((day, dayIndex) => (
-        <div className="day" key={dayIndex}>
-          <h2>{day.day}</h2>
-          <ul>
-            {day.places.map((place, placeIndex) => (
-              <li key={placeIndex}>
-                <h3>{place.place}</h3>
-                <p>{place.description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <div className="holder">
+        {data.itinerary.days.map((day, dayIndex) => (
+          <div className="day" key={dayIndex}>
+            <h2>{day.day}</h2>
+            <ul>
+              {day.places.map((place, placeIndex) => (
+                <li key={placeIndex}>
+                  <h3>{place.place}</h3>
+                  <p>{place.description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
       <button onClick={fetchResponse}>TESTING BUTTON FOR FETCH RESPONSE</button>
     </div>
   );

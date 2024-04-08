@@ -1,11 +1,9 @@
-.Popup {
-    background-color: rgba(64, 205, 224, 0.59);
-    max-width: 70vw;
-    max-height: 80vh;
-    padding-bottom: 20px;
-    box-shadow: 5px 5px 5px gray;
+
+*{
     font-family: 'Roboto', sans-serif;
-    overflow-y: auto;
+}
+.modal-body {
+    background-color: rgba(64, 205, 224, 0.59);
 }
 
 .Popup a {

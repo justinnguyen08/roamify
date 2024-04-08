@@ -5,6 +5,7 @@ import Destinations from "./Components/Destinations";
 import SettingsPage from "./Components/SettingsPage";
 import ItineraryList from "./Components/ItineraryList";
 import GPT from "./Components/gpt";
+import './App.css'
 const App = () => {
   const [currentPage, setCurrentPage] = useState("home");
 
@@ -43,6 +44,19 @@ const App = () => {
     { id: 5, name: 'nature', category: 2 },
     { id: 6, name: 'beach', category: 2 },
   ]);
+  
+  function addVacationStyle(name) {
+    const nextId = Math.max(...vacationStyleItems.map(item => item.id)) + 1;
+    const newVacationStyle = {
+      id: nextId,
+      name: name,
+      category: 2
+    };
+    setVacationStyleItems([...vacationStyleItems, newVacationStyle]);
+  }
+
+
+
   const [venturesItems, setVenturesItems] = useState([
     { id: 1, name: 'surfing', category: 2 },
     { id: 2, name: 'snorkeling', category: 2 },
@@ -53,6 +67,17 @@ const App = () => {
     { id: 7, name: 'kayaking', category: 2 },
     { id: 8, name: 'sightseeing', category: 2 },
   ]);
+
+  function addVacationVenture(name) {
+    const nextId = Math.max(...venturesItems.map(item => item.id)) + 1;
+    const newVentureItem = {
+      id: nextId,
+      name: name,
+      category: 2
+    };
+    setVenturesItems([...venturesItems, newVentureItem]);
+  }
+
   const [destinationsItems, setDestinationsItems] = useState([
     { id: 1, name: 'Bahamas', category: 2 },
     { id: 2, name: 'Cancun', category: 2 },
@@ -64,6 +89,17 @@ const App = () => {
     { id: 8, name: 'Aruba', category: 2 },
   ]);
 
+
+  function addVacationDestination(name) {
+    const nextId = Math.max(...destinationsItems.map(item => item.id)) + 1;
+    const newDestinationItem = {
+      id: nextId,
+      name: name,
+      category: 2
+    };
+    setDestinationsItems([...destinationsItems, newDestinationItem]);
+  }
+
   const userPreferences = {
     vacationStylePreferences: vacationStyleItems.filter(item => item.category === 1),
     venturesPreferences: venturesItems.filter(item => item.category === 1),
@@ -74,21 +110,36 @@ const App = () => {
   return (
     <div>
       {currentPage === "home" && (
-        <button onClick={handleSettingsClick}>Settings</button>
-      )}
-      {currentPage === "home" && (
-        <div>
-          <h1>Home</h1>
-          <button onClick={styleClick}>Let's Start: Vacation Style!</button>
+        <div className="container homepage">
+          <div className="row">
+            <div className="homeSpecificButtons d-flex justify-content-end">
+              <button onClick={handleSettingsClick}>Settings</button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="homeName col-12">
+              <d1>Roamify</d1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 tagline">
+              <d2>Planning trips made easy</d2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 nextPages d-flex justify-content-evenly">
+              <button onClick={styleClick}>Let's Start: Vacation Style!</button>
+            </div>
+          </div>
         </div>
       )}
-      {currentPage === 'vacation-style' && <VacationStyle items={vacationStyleItems} setItems={setVacationStyleItems} VacationStyle onNextClick={ventureClick} onHomeClick={handleHomeClick} />}
-      {currentPage === 'ventures' && <Ventures items={venturesItems} setItems={setVenturesItems} onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} />}
-      {currentPage === 'destinations' && <Destinations items={destinationsItems} setItems={setDestinationsItems} onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick} />}
+      {currentPage === 'vacation-style' && <VacationStyle items={vacationStyleItems} setItems={setVacationStyleItems} VacationStyle onNextClick={ventureClick} onHomeClick={handleHomeClick} addVacationStyle={addVacationStyle} />}
+      {currentPage === 'ventures' && <Ventures items={venturesItems} setItems={setVenturesItems} onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} addVacationVenture={addVacationVenture} />}
+      {currentPage === 'destinations' && <Destinations items={destinationsItems} setItems={setDestinationsItems} onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick} addVacationDestination={addVacationDestination} />}
       {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick} />}
-      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick}/>}
+      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick} />}
       {currentPage === "firstItineraries" && (
-        <GPT onBackClick={destClick} userPreferences={userPreferences}></GPT> 
+        <GPT onBackClick={destClick} userPreferences={userPreferences}></GPT>
       )}
     </div>
   );
