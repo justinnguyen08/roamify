@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 const { Configuration, OpenAI } = require("openai");
 
-function GPT({ onBackClick, userPreferences, onLocationsUpdate }) {
+function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestination }) {
   const [gptResponse, setGptResponse] = useState("");
-  const [loading, setLoading] = useState(false);
-  function formatUserPreferences(preferences) {
-    let formattedString = "Rankings:\n\n";
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [itinLoading, setItinLoading] = useState(false);
+  function formatUserPreferences(preferences, destination) {
+    let formattedString = `Creating an itinerary for: ${destination}\n\nRankings:\n\n`;
     
-    // Assuming each preference array contains objects with a 'name' property
     if (preferences.vacationStylePreferences.length) {
       formattedString += "Location: ";
       formattedString += preferences.vacationStylePreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
@@ -102,21 +102,21 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate }) {
   };
 
   const openai = new OpenAI({
-    apiKey: "Put Key Here",
+    apiKey: "Put API Key here",
     dangerouslyAllowBrowser: true,
   });
 
-  async function fetchResponse() {
-    setLoading(true);
+  async function getLocations() {
+    setLocationLoading(true);
     const preferences = formatUserPreferences(userPreferences);
-    // const prompt = 'You are an assistant who creates sample itineraries based on user rankings in different travel-related categories.  The response must be in JSON format in the following template.  You must specify real-world locations and activities. You should aim to find activities and locations that maximize multiple points of the user\'s rankings. Use these to generate 1 itinerary, where the itinerary is for one location. The location must be a city or country. The itinerary should take up 3 days with 3 activities each. \n\n{\n  "itinerary": {\n    "location": "location Name",\n    "days": [\n      {\n        "day": "Day 1",\n        "places": [\n          {\n            "place": "Place 1",\n            "description": "Description of Place 1"\n          },\n          {\n            "place": "Place 2",\n            "description": "Description of Place 2"\n          },\n          {\n            "place": "Place 3",\n            "description": "Description of Place 3"\n          }\n        ]\n      },\n      {\n        "day": "Day 2",\n        "places": [\n          {\n            "place": "Place 4",\n            "description": "Description of Place 4"\n          },\n          {\n            "place": "Place 5",\n            "description": "Description of Place 5"\n          },\n          {\n            "place": "Place 6",\n            "description": "Description of Place 6"\n          }\n        ]\n      },\n      {\n        "day": "Day 3",\n        "places": [\n          {\n            "place": "Place 7",\n            "description": "Description of Place 7"\n          },\n          {\n            "place": "Place 8",\n            "description": "Description of Place 8"\n          },\n          {\n            "place": "Place 9",\n            "description": "Description of Place 9"\n          }\n        ]\n      }\n    ]\n  }\n}\n';
+    
     // const prompt = 'You are a travel assistant who comes up with destinations for people to travel to, based on their preferences around various aspects of travel and vacationing. Each destination must be a country or a city. Return a string containing these 3 destinations, using this format: \'["Destination 1", "Destination 2", "Destination 3"]\'. Replace these strings with the destinations you generate. Include no other information or text, besides this one string containing the three locations.' 
-    const prompt = 'You are a travel assistant who comes up with destinations for people to travel to, based on their preferences around various aspects of travel and vacationing. Each destination must be a country or a city. Return a string containing these 3 destinations, using this format: [{"city": "Destination 1"}, {"city": "Destination 2"}, {"city": "Destination 3"}] Replace these strings with the destinations you generate. Include no other information or text, besides this one string containing the three locations.' 
+    const promptLocation = 'You are a travel assistant who comes up with destinations for people to travel to, based on their preferences around various aspects of travel and vacationing. Each destination must be a country or a city. Return a string containing these 3 destinations, using this format: [{"city": "Destination 1"}, {"city": "Destination 2"}, {"city": "Destination 3"}] Replace these strings with the destinations you generate. Include no other information or text, besides this one string containing the three locations.' 
     const completion = await openai.chat.completions.create({
       messages: [
         {
           role: "system",
-          content: prompt,
+          content: promptLocation,
         },
         {
           role: "user",
@@ -146,21 +146,65 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate }) {
     // setPageData(locationNames);
     console.log("Ran once");
     console.log(completion.choices[0].message.content);
-    setLoading(false);
+    setLocationLoading(false);
   }
+
+  async function getItinerary() {
+    setItinLoading(true);
+    const promptItin = 'You are an assistant who creates sample itineraries based on user rankings in different travel-related categories.  The response must be in JSON format in the following template.  You must specify real-world locations and activities. You should aim to find activities and locations that maximize multiple points of the user\'s rankings. Use these to generate 1 itinerary, where the itinerary is for one location. The location must be a city or country. The itinerary should take up 3 days with 3 activities each. \n\n{\n  "itinerary": {\n    "location": "location Name",\n    "days": [\n      {\n        "day": "Day 1",\n        "places": [\n          {\n            "place": "Place 1",\n            "description": "Description of Place 1"\n          },\n          {\n            "place": "Place 2",\n            "description": "Description of Place 2"\n          },\n          {\n            "place": "Place 3",\n            "description": "Description of Place 3"\n          }\n        ]\n      },\n      {\n        "day": "Day 2",\n        "places": [\n          {\n            "place": "Place 4",\n            "description": "Description of Place 4"\n          },\n          {\n            "place": "Place 5",\n            "description": "Description of Place 5"\n          },\n          {\n            "place": "Place 6",\n            "description": "Description of Place 6"\n          }\n        ]\n      },\n      {\n        "day": "Day 3",\n        "places": [\n          {\n            "place": "Place 7",\n            "description": "Description of Place 7"\n          },\n          {\n            "place": "Place 8",\n            "description": "Description of Place 8"\n          },\n          {\n            "place": "Place 9",\n            "description": "Description of Place 9"\n          }\n        ]\n      }\n    ]\n  }\n}\n';
+    const preferences = formatUserPreferences(userPreferences, selectedDestination);
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: promptItin
+          },
+          {
+            role: "user",
+            content: preferences,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        temperature: 1,
+        max_tokens: 1028,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+      // console.log(preferences)
+      setGptResponse(completion.choices[0].message.content);
+      setPageData(JSON.parse(completion.choices[0].message.content));
+      setItinLoading(false);
+      // console.log("Ran once");
+      // console.log(completion.choices[0].message.content);
+    } catch (apiError) {
+      console.error("API request failed: ", apiError);
+      setItinLoading(false);
+    }
+  }  
+  console.log("gpt.js", selectedDestination);
+  
+  useEffect(() => {
+    if (selectedDestination) {
+      getItinerary(selectedDestination);
+    }
+  }, [selectedDestination]);
   return (
-    
     <div className="itinerary">
-      <button onClick={handleBackClick}>Go Home</button>
-      <button onClick={fetchResponse}>Fetch Itinerary</button>
-      {loading ? (
-        <p>Loading...</p> 
-      ) : (
-        <>
-          <h1>Itinerary for </h1>
-          {/* {data.itinerary.days.map((day, dayIndex) => (
-            <div className="day" key={dayIndex}>
-              <h2>{day.day}</h2>
+      <button onClick={handleBackClick}>See Locations</button>
+      <button onClick={getLocations}>Generate Locations</button>
+      <button onClick={getItinerary}>Generate Itinerary</button>
+      <h1>Itinerary for {selectedDestination}</h1>
+      {/* <div> className="itinerary-content"
+        {gptResponse || "Generating itinerary..."}
+      </div> */}
+      {itinLoading ? (
+        <p>Loading itinerary...</p>
+          ) : (
+            data.itinerary.days.map((day, dayIndex) => (
+              <div className="day" key={dayIndex}>
+                <h2>{day.day}</h2>
                 <ul>
                   {day.places.map((place, placeIndex) => (
                     <li key={placeIndex}>
@@ -169,12 +213,14 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate }) {
                     </li>
                   ))}
                 </ul>
-            </div>
-          ))} */}
-        </>
-      )}
+              </div>
+            ))
+          )}
+      
     </div>
   );
 }
+
+
 
 export default GPT;

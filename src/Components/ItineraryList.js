@@ -1,5 +1,6 @@
 import React from "react";
 import "./ItineraryList.css";
+// const { Configuration, OpenAI } = require("openai");
 
 function ItineraryItem({ destination, imageUrl, onItineraryClick }) {
   return (
@@ -14,7 +15,7 @@ function ItineraryItem({ destination, imageUrl, onItineraryClick }) {
   );
 }
 
-function ItineraryList({ onBackClick, onNextClick, locations }) {
+function ItineraryList({ onBackClick, onSelectItinerary, locations, onNextClick }) {
   const handleBackClick = () => {
     onBackClick();
   };
@@ -23,8 +24,8 @@ function ItineraryList({ onBackClick, onNextClick, locations }) {
     onNextClick();
   };
 
-  const test = ["hi", "hrllo"];
-  console.log("Itinerary List", test, " | ", locations);
+  // const test = ["hi", "hrllo"];
+  console.log("Itinerary List",locations);
   return (
     <div className="itinerary-list">
       <button onClick={handleBackClick}>Back: Destinations</button>
@@ -34,9 +35,15 @@ function ItineraryList({ onBackClick, onNextClick, locations }) {
           BASED ON YOUR GROUP'S RANKINGS, HERE ARE OUR RECOMMENDED ITINERARIES!
         </p>
       </div>
-        {locations.map((locationName, index) => (
-          <ItineraryItem key={index} destination={locationName} onItineraryClick={() => handleNextClick(locationName)} />
-        ))}
+        {/* Rendering ItineraryItem components for each location */}
+          {locations && locations.map((locationName, index) => (
+            <ItineraryItem
+              key={index}
+              destination={locationName}
+              imageUrl={"defaultImageUrl.jpg"} // Replace this with the actual image URL if available
+              onItineraryClick={() => onSelectItinerary(locationName)}
+            />
+          ))}
 
 
     </div>

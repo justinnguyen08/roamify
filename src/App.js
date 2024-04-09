@@ -8,6 +8,8 @@ import GPT from "./Components/gpt";
 const App = () => {
   const [currentPage, setCurrentPage] = useState("home");
 
+  const [selectedDestination, setSelectedDestination] = useState("");
+
   const styleClick = () => {
     setCurrentPage("vacation-style");
   };
@@ -35,6 +37,13 @@ const App = () => {
   const firstItineraryClick = () => {
     setCurrentPage("firstItineraries");
   };
+
+  const onSelectItinerary = (destination) => {
+    setSelectedDestination(destination);
+    setCurrentPage("firstItineraries"); // Or whatever page you use to display the GPT-generated itinerary
+  };
+
+
   const [vacationStyleItems, setVacationStyleItems] = useState([
     { id: 1, name: 'historical', category: 2 },
     { id: 2, name: 'tropical', category: 2 },
@@ -79,7 +88,7 @@ const App = () => {
   };
 
 
-  console.log("App.js: ", locations.cities);
+  console.log("App.js, locations.cities: ", locations.cities);
   return (
     <div>
       {currentPage === "home" && (
@@ -95,9 +104,9 @@ const App = () => {
       {currentPage === 'ventures' && <Ventures items={venturesItems} setItems={setVenturesItems} onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} />}
       {currentPage === 'destinations' && <Destinations items={destinationsItems} setItems={setDestinationsItems} onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick} />}
       {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick} />}
-      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick} locations={locations}/>}
+      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick} locations={locations.cities} onSelectItinerary={onSelectItinerary}/>}
       {currentPage === "firstItineraries" && (
-        <GPT onBackClick={destClick} userPreferences={userPreferences} onLocationsUpdate={handleLocationsUpdate} locations={locations}></GPT> 
+        <GPT onBackClick={itineraryClick} userPreferences={userPreferences} onLocationsUpdate={handleLocationsUpdate} locations={locations} selectedDestination={selectedDestination}></GPT> 
       )}
     </div>
   );
