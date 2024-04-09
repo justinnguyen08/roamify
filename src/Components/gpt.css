@@ -1,0 +1,29 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.holder {
+    background-color: rgba(64, 205, 224, 0.59);
+    box-shadow: 5px 5px 5px gray;
+    border-style: solid;
+    border-color: black;
+    margin-right: 10vh;
+    margin-left: 10vh;
+    margin-bottom: 10vh;
+}
+
+.day {
+    background-color: lightgray;
+    box-shadow: 5px 5px 5px gray;
+    border-style: dashed;
+    border-color: black;
+    margin: 2vh;
+}
+
+h2 {
+    margin-left: 1vw;
+}

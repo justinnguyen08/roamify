@@ -1,21 +1,27 @@
+*{
+  font-family: 'Roboto', sans-serif;
+}
 .itinerary-list {
-    width: 300px; 
-    margin: auto;
-    background-color: #f3f3f3;
-    font-family: Arial, sans-serif;
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+    margin-right: 10vw;
+    margin-left: 10vw;
+    background-color: rgba(64, 205, 224, 0.59);
+    border-color: black;
+    border-style: dashed;
+    box-shadow: 5px 5px 5px gray;
   }
   
   .header {
     text-align: center;
-    padding: 20px;
-    background-color: #ececec;
-    color: #333;
-    font-size: 14px;
+    margin-top: 5vh;
+    font-size: 30px;
   }
   
   .itinerary-item {
+    background-color: lightgray;
     margin: 20px;
-    border: 1px solid #ccc;
+    border: solid black;
     text-align: center;
   }
   
@@ -43,4 +49,8 @@
   
   .itinerary-button:hover {
     background-color: #0056b3;
+  }
+
+  .name{
+    margin-top: 1vh;
   }
