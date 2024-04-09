@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/roamify/static/css/main.c6720c82.css",
-    "main.js": "/roamify/static/js/main.e8c1804c.js",
-    "static/js/453.ed639d6a.chunk.js": "/roamify/static/js/453.ed639d6a.chunk.js",
+    "main.css": "/roamify/static/css/main.989f75c6.css",
+    "main.js": "/roamify/static/js/main.3c866cbf.js",
+    "static/js/453.76053ac6.chunk.js": "/roamify/static/js/453.76053ac6.chunk.js",
     "index.html": "/roamify/index.html",
-    "main.c6720c82.css.map": "/roamify/static/css/main.c6720c82.css.map",
-    "main.e8c1804c.js.map": "/roamify/static/js/main.e8c1804c.js.map",
-    "453.ed639d6a.chunk.js.map": "/roamify/static/js/453.ed639d6a.chunk.js.map"
+    "main.989f75c6.css.map": "/roamify/static/css/main.989f75c6.css.map",
+    "main.3c866cbf.js.map": "/roamify/static/js/main.3c866cbf.js.map",
+    "453.76053ac6.chunk.js.map": "/roamify/static/js/453.76053ac6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c6720c82.css",
-    "static/js/main.e8c1804c.js"
+    "static/css/main.989f75c6.css",
+    "static/js/main.3c866cbf.js"
   ]
 }
