@@ -70,7 +70,16 @@ const App = () => {
     destinationsPreferences: destinationsItems.filter(item => item.category === 1),
   };
 
+  // In App component
+  const [locations, setLocations] = useState(['New York', 'London', 'Paris']);
 
+  const handleLocationsUpdate = (newLocations) => {
+    // console.log("Updating locations with:", newLocations, "\narray length: ", newLocations.length);
+    setLocations(newLocations);
+  };
+
+
+  console.log("App.js: ", locations.cities);
   return (
     <div>
       {currentPage === "home" && (
@@ -86,9 +95,9 @@ const App = () => {
       {currentPage === 'ventures' && <Ventures items={venturesItems} setItems={setVenturesItems} onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} />}
       {currentPage === 'destinations' && <Destinations items={destinationsItems} setItems={setDestinationsItems} onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick} />}
       {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick} />}
-      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick}/>}
+      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick} locations={locations}/>}
       {currentPage === "firstItineraries" && (
-        <GPT onBackClick={destClick} userPreferences={userPreferences}></GPT> 
+        <GPT onBackClick={destClick} userPreferences={userPreferences} onLocationsUpdate={handleLocationsUpdate} locations={locations}></GPT> 
       )}
     </div>
   );

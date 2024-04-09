@@ -1,26 +1,20 @@
 import React from "react";
 import "./ItineraryList.css";
 
-function ItineraryItem({ destination, imageUrl }) {
+function ItineraryItem({ destination, imageUrl, onItineraryClick }) {
   return (
     <div className="itinerary-item">
       <h2>{destination}</h2>
-      <div
+      {/* <div
         className="itinerary-image"
         style={{ backgroundImage: `url(${imageUrl})` }}
-      />
-      <button className="itinerary-button">SEE ITINERARY</button>
+      /> */}
+      <button className="itinerary-button" onClick={onItineraryClick}>SEE ITINERARY</button>
     </div>
   );
 }
 
-function ItineraryList({ onBackClick, onNextClick }) {
-  const itineraries = [
-    { destination: "Costa Rica", imageUrl: "costaRicaImage.jpg" },
-    { destination: "Cancún", imageUrl: "cancun.jpg" },
-    { destination: "Bahamas", imageUrl: "bahamas.jpg" },
-  ];
-
+function ItineraryList({ onBackClick, onNextClick, locations }) {
   const handleBackClick = () => {
     onBackClick();
   };
@@ -29,18 +23,22 @@ function ItineraryList({ onBackClick, onNextClick }) {
     onNextClick();
   };
 
+  const test = ["hi", "hrllo"];
+  console.log("Itinerary List", test, " | ", locations);
   return (
     <div className="itinerary-list">
-      <button onClick={handleBackClick}>Back: Vacation Ventures</button>
+      <button onClick={handleBackClick}>Back: Destinations</button>
       <button onClick={handleNextClick}>Itinerary Page</button>
       <div className="header">
         <p>
           BASED ON YOUR GROUP'S RANKINGS, HERE ARE OUR RECOMMENDED ITINERARIES!
         </p>
       </div>
-      {itineraries.map((itinerary, index) => (
-        <ItineraryItem key={index} {...itinerary} />
-      ))}
+        {locations.map((locationName, index) => (
+          <ItineraryItem key={index} destination={locationName} onItineraryClick={() => handleNextClick(locationName)} />
+        ))}
+
+
     </div>
   );
 }
