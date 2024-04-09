@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './gpt.css'
 const { Configuration, OpenAI } = require("openai");
 
 function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestination }) {
@@ -7,13 +8,13 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestinat
   const [itinLoading, setItinLoading] = useState(false);
   function formatUserPreferences(preferences, destination) {
     let formattedString = `Creating an itinerary for: ${destination}\n\nRankings:\n\n`;
-    
+
     if (preferences.vacationStylePreferences.length) {
       formattedString += "Location: ";
       formattedString += preferences.vacationStylePreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
       formattedString += "\n";
     }
-  
+
     if (preferences.venturesPreferences.length) {
       formattedString += "Activities: ";
       formattedString += preferences.venturesPreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
@@ -25,10 +26,11 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestinat
       formattedString += preferences.destinationsPreferences.map((item, index) => `${index + 1}st- ${item.name}`).join(", ");
       formattedString += "\n";
     }
-    
+
     return formattedString;
   }
-  
+
+
   const [data, setPageData] = useState({
     itinerary: {
       location: "Cape Town",
@@ -102,16 +104,16 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestinat
   };
 
   const openai = new OpenAI({
-    apiKey: "Put API Key here",
+    apiKey: "API KEY HERE",
     dangerouslyAllowBrowser: true,
   });
 
   async function getLocations() {
     setLocationLoading(true);
     const preferences = formatUserPreferences(userPreferences);
-    
+
     // const prompt = 'You are a travel assistant who comes up with destinations for people to travel to, based on their preferences around various aspects of travel and vacationing. Each destination must be a country or a city. Return a string containing these 3 destinations, using this format: \'["Destination 1", "Destination 2", "Destination 3"]\'. Replace these strings with the destinations you generate. Include no other information or text, besides this one string containing the three locations.' 
-    const promptLocation = 'You are a travel assistant who comes up with destinations for people to travel to, based on their preferences around various aspects of travel and vacationing. Each destination must be a country or a city. Return a string containing these 3 destinations, using this format: [{"city": "Destination 1"}, {"city": "Destination 2"}, {"city": "Destination 3"}] Replace these strings with the destinations you generate. Include no other information or text, besides this one string containing the three locations.' 
+    const promptLocation = 'You are a travel assistant who comes up with destinations for people to travel to, based on their preferences around various aspects of travel and vacationing. Each destination must be a country or a city. Return a string containing these 3 destinations, using this format: [{"city": "Destination 1"}, {"city": "Destination 2"}, {"city": "Destination 3"}] Replace these strings with the destinations you generate. Include no other information or text, besides this one string containing the three locations.'
     const completion = await openai.chat.completions.create({
       messages: [
         {
@@ -142,7 +144,7 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestinat
     });
 
     console.log("After parsing", locationNames, " | ", cities);
-    onLocationsUpdate({cities}); 
+    onLocationsUpdate({ cities });
     // setPageData(locationNames);
     console.log("Ran once");
     console.log(completion.choices[0].message.content);
@@ -182,9 +184,9 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestinat
       console.error("API request failed: ", apiError);
       setItinLoading(false);
     }
-  }  
+  }
   console.log("gpt.js", selectedDestination);
-  
+
   useEffect(() => {
     if (selectedDestination) {
       getItinerary(selectedDestination);
@@ -193,30 +195,29 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestinat
   return (
     <div className="itinerary">
       <button onClick={handleBackClick}>See Locations</button>
-      <button onClick={getLocations}>Generate Locations</button>
-      <button onClick={getItinerary}>Generate Itinerary</button>
       <h1>Itinerary for {selectedDestination}</h1>
       {/* <div> className="itinerary-content"
         {gptResponse || "Generating itinerary..."}
       </div> */}
-      {itinLoading ? (
-        <p>Loading itinerary...</p>
-          ) : (
-            data.itinerary.days.map((day, dayIndex) => (
-              <div className="day" key={dayIndex}>
-                <h2>{day.day}</h2>
-                <ul>
-                  {day.places.map((place, placeIndex) => (
-                    <li key={placeIndex}>
-                      <h3>{place.place}</h3>
-                      <p>{place.description}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))
-          )}
-      
+      <div className="holder">
+        {itinLoading ? (
+          <p>Loading itinerary...</p>
+        ) : (
+          data.itinerary.days.map((day, dayIndex) => (
+            <div className="day" key={dayIndex}>
+              <h2>{day.day}</h2>
+              <ul>
+                {day.places.map((place, placeIndex) => (
+                  <li key={placeIndex}>
+                    <h3>{place.place}</h3>
+                    <p>{place.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
