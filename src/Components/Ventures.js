@@ -23,6 +23,7 @@ function Ventures({ items, setItems, onHomeClick, onBackClick, onNextClick, addV
   }
 
   const addVacationVentureClick = (name) => {
+    document.getElementById('newVentureName').value = "";
     addVacationVenture(name);
   }
 
@@ -99,7 +100,7 @@ function Ventures({ items, setItems, onHomeClick, onBackClick, onNextClick, addV
                               <ul className="list-unstyled border p-3 mb-3">
                                 {category.name == 'Options' && (
                                   <div className="inputContainer">
-                                    <input type="text" id="inputField" placeholder='Add Your Own Venture' />
+                                    <input type="text" id="newVentureName" placeholder='Add Your Own Venture' />
                                     <button onClick={() => {
                                       const input = document.getElementById('newVentureName').value;
                                       addVacationVentureClick(input);

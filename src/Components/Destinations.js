@@ -24,6 +24,7 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick, 
   }
 
   const addVacationDestinationClick = (name) => {
+    document.getElementById('newDestinationName').value = "";
     addVacationDestination(name);
   }
 
@@ -73,11 +74,11 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick, 
         <button onClick={handleBackClick}>Back: Vacation Ventures</button>
         <button onClick={handleNextClick}>Next: See My Itineraries!</button>
       </div>
-      <h1 className='mainHeader'> Vacation Location</h1>
+      <h1 className='mainHeader'> Vacation Preferences</h1>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='mainContent'>
-        <h2 className='tagline'>DRAG AND DROP YOUR TOP LOCATIONS</h2>
+          <h2 className='tagline'>DRAG AND DROP YOUR PREFRENCES</h2>
           <Droppable droppableId="Categories" type="droppableItem">
             {(provided) => (
               <div ref={provided.innerRef} className='dragAndDropHolder'>
@@ -99,7 +100,7 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick, 
                               <ul className="list-unstyled border p-3 mb-3">
                                 {category.name == 'Options' && (
                                   <div className="inputContainer">
-                                    <input type="text" id="inputField" placeholder='Add Your Own Locations' />
+                                    <input type="text" id="newDestinationName" placeholder='Add Your Own Preference' />
                                     <button onClick={() => {
                                       const input = document.getElementById('newDestinationName').value;
                                       addVacationDestinationClick(input);

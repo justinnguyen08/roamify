@@ -104,7 +104,7 @@ function GPT({ onBackClick, userPreferences, onLocationsUpdate, selectedDestinat
   };
 
   const openai = new OpenAI({
-    apiKey: "API KEY HERE",
+    apiKey: "PUT API KEY HERE",
     dangerouslyAllowBrowser: true,
   });
 

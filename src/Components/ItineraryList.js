@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./ItineraryList.css";
 const { Configuration, OpenAI } = require("openai");
 
@@ -19,11 +19,13 @@ function ItineraryItem({ destination, imageUrl, onItineraryClick }) {
 
 
 
-function ItineraryList({ onBackClick, onSelectItinerary, locations, onNextClick, userPreferences, onLocationsUpdate }) {
+function ItineraryList({ onBackClick, onSelectItinerary, locations, onNextClick, userPreferences, onLocationsUpdate, generatedLocations, setGeneratedLocations }) {
   useEffect(() => {
     console.log("Get Locations")
     getLocations();
   }, []);
+
+
 
   function formatUserPreferences(preferences, destination) {
     let formattedString = `Creating an itinerary for: ${destination}\n\nRankings:\n\n`;
@@ -50,12 +52,19 @@ function ItineraryList({ onBackClick, onSelectItinerary, locations, onNextClick,
   }
 
   const openai = new OpenAI({
-    apiKey: "API KEY HERE",
+    apiKey: "PUT API KEY HERE",
     dangerouslyAllowBrowser: true,
   });
 
-
+  function forceGenerate() {
+    setGeneratedLocations(false);
+    getLocations();
+  }
   async function getLocations() {
+    if (generatedLocations === true) {
+      console.log("Already Generated Locations")
+      return;
+    }
     const preferences = formatUserPreferences(userPreferences);
 
     // const prompt = 'You are a travel assistant who comes up with destinations for people to travel to, based on their preferences around various aspects of travel and vacationing. Each destination must be a country or a city. Return a string containing these 3 destinations, using this format: \'["Destination 1", "Destination 2", "Destination 3"]\'. Replace these strings with the destinations you generate. Include no other information or text, besides this one string containing the three locations.' 
@@ -84,6 +93,8 @@ function ItineraryList({ onBackClick, onSelectItinerary, locations, onNextClick,
       cities.push(item.city);
     });
     onLocationsUpdate({ cities });
+    setGeneratedLocations(true);
+    console.log("END OF ITERARY LIST API CALL");
   }
   const handleBackClick = () => {
     onBackClick();
@@ -100,11 +111,13 @@ function ItineraryList({ onBackClick, onSelectItinerary, locations, onNextClick,
   return (
     <div>
       <button onClick={handleBackClick}>Back: Destinations</button>
+      <button onClick={forceGenerate}>Generate New Locations</button>
       <div className="header">
         <p>
-          BASED ON YOUR GROUP'S RANKINGS, HERE ARE OUR RECOMMENDED ITINERARIES!
+          BASED ON YOUR RANKINGS, HERE ARE OUR RECOMMENDED ITINERARIES!
         </p>
       </div>
+
       <div className="itinerary-list">
         {/* Rendering ItineraryItem components for each location */}
         {locations && locations.map((locationName, index) => (

@@ -23,6 +23,7 @@ function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationS
   };
 
   const addVacationStyleClick = (name) => {
+    document.getElementById('button').value = "";
     addVacationStyle(name);
   }
 
@@ -66,12 +67,12 @@ function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationS
     <div className="container py-5">
       <div className='d-flex justify-content-between'>
         <button onClick={handleHomeClick} >Home</button>
-        <button onClick={handleNextClick}>Next: Vacation Ventures</button>
+        <button onClick={handleNextClick}>Next: Vacation Preferences</button>
       </div>
-      <h1 className='mainHeader'> Vacation Style </h1>
+      <h1 className='mainHeader'> Vacation Style</h1>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='mainContent'>
-          <h2 className='tagline'>DRAG AND DROP YOUR TOP PREFERENCES</h2>
+          <h2 className='tagline'>DRAG AND DROP YOUR TOP STYLES</h2>
           <Droppable droppableId="Categories" type="droppableItem">
             {(provided) => (
               <div ref={provided.innerRef} className='dragAndDropHolder'>
@@ -91,9 +92,9 @@ function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationS
                           {(provided) => (
                             <div ref={provided.innerRef}>
                               <ul className="list-unstyled border p-3 mb-3">
-                                {category.name === 'Options' && ( 
-                                  <div className="inputContainer">
-                                    <input type="text" id="inputField" placeholder='Add Your Own Style' />
+                                {category.name === 'Options' && (
+                                  <div className="inputContainer">  
+                                    <input type="text" id="newStyleName" placeholder='Add Your Own Style' />
                                     <button onClick={() => {
                                       const input = document.getElementById('newStyleName').value;
                                       addVacationStyleClick(input);
@@ -127,7 +128,9 @@ function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationS
                                               <span className="rank-badge">{itemIndex + 1}</span>
                                             )}
                                             <Item item={item} />
-                                            <Popup_Content />
+                                            <div className='justify-content-between'>
+                                              <Popup_Content />
+                                            </div>
                                           </li>
                                         </div>
                                       )}

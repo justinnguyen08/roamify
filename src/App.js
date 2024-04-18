@@ -11,6 +11,8 @@ const App = () => {
 
   const [selectedDestination, setSelectedDestination] = useState("");
 
+  const [generatedLocations, setGeneratedLocations]= useState(false);
+
   const styleClick = () => {
     setCurrentPage("vacation-style");
   };
@@ -46,12 +48,16 @@ const App = () => {
 
 
   const [vacationStyleItems, setVacationStyleItems] = useState([
-    { id: 1, name: 'historical', category: 2 },
-    { id: 2, name: 'tropical', category: 2 },
-    { id: 3, name: 'snowy', category: 2 },
-    { id: 4, name: 'city', category: 2 },
-    { id: 5, name: 'nature', category: 2 },
-    { id: 6, name: 'beach', category: 2 },
+    { id: 1, name: 'Historical', category: 2 },
+    { id: 2, name: 'Tropical', category: 2 },
+    { id: 3, name: 'Snowy', category: 2 },
+    { id: 4, name: 'City', category: 2 },
+    { id: 5, name: 'Nature', category: 2 },
+    { id: 6, name: 'Beach', category: 2 },
+    { id: 7, name: 'Mountains', category: 2 },
+    { id: 8, name: 'Desert', category: 2 },
+    { id: 9, name: 'Lake', category: 2 },
+    { id: 10, name: 'Ocean/Sea', category: 2 },
   ]);
   
   function addVacationStyle(name) {
@@ -61,20 +67,22 @@ const App = () => {
       name: name,
       category: 2
     };
-    setVacationStyleItems([...vacationStyleItems, newVacationStyle]);
+    setVacationStyleItems([newVacationStyle, ...vacationStyleItems]);
   }
 
 
 
   const [venturesItems, setVenturesItems] = useState([
-    { id: 1, name: 'surfing', category: 2 },
-    { id: 2, name: 'snorkeling', category: 2 },
-    { id: 3, name: 'swimming', category: 2 },
-    { id: 4, name: 'ziplining', category: 2 },
-    { id: 5, name: 'hiking', category: 2 },
-    { id: 6, name: 'nightlife', category: 2 },
-    { id: 7, name: 'kayaking', category: 2 },
-    { id: 8, name: 'sightseeing', category: 2 },
+    { id: 1, name: 'Foodie', category: 2 },
+    { id: 2, name: 'Local Culture', category: 2 },
+    { id: 3, name: 'Swimming', category: 2 },
+    { id: 4, name: 'Hiking', category: 2 },
+    { id: 5, name: 'Sightseeing', category: 2 },
+    { id: 6, name: 'Nightlife', category: 2 },
+    { id: 7, name: 'Shopping', category: 2 },
+    { id: 8, name: 'Camping', category: 2 },
+    { id: 9, name: 'Biking', category: 2 },
+    { id: 10, name: 'Fishing', category: 2 },
   ]);
 
   function addVacationVenture(name) {
@@ -88,14 +96,15 @@ const App = () => {
   }
 
   const [destinationsItems, setDestinationsItems] = useState([
-    { id: 1, name: 'Bahamas', category: 2 },
-    { id: 2, name: 'Cancun', category: 2 },
-    { id: 3, name: 'Bali', category: 2 },
-    { id: 4, name: 'Fiji', category: 2 },
-    { id: 5, name: 'Turks & Caicos', category: 2 },
-    { id: 6, name: "Hawai'i", category: 2 },
-    { id: 7, name: 'Phuket', category: 2 },
-    { id: 8, name: 'Aruba', category: 2 },
+    { id: 1, name: 'LGBTQ+ friendly', category: 2 },
+    { id: 2, name: 'Hearing/Vision Impaired', category: 2 },
+    { id: 3, name: 'Kid friendly', category: 2 },
+    { id: 4, name: 'Adult-only', category: 2 },
+    { id: 5, name: 'High-Adrenaline', category: 2 },
+    { id: 6, name: "Relaxing", category: 2 },
+    { id: 7, name: 'Solo Traveler', category: 2 },
+    { id: 8, name: 'Eco-Friendly', category: 2 },
+    { id: 9, name: 'Low Cost', category: 2 },
   ]);
 
 
@@ -155,7 +164,7 @@ const App = () => {
       {currentPage === 'ventures' && <Ventures items={venturesItems} setItems={setVenturesItems} onBackClick={styleClick} onHomeClick={handleHomeClick} onNextClick={destClick} addVacationVenture={addVacationVenture} />}
       {currentPage === 'destinations' && <Destinations items={destinationsItems} setItems={setDestinationsItems} onBackClick={ventureClick} onHomeClick={handleHomeClick} onNextClick={itineraryClick} addVacationDestination={addVacationDestination} />}
       {currentPage === 'settings' && <SettingsPage onBackClick={handleHomeClick} />}
-      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick} locations={locations.cities} onSelectItinerary={onSelectItinerary} userPreferences={userPreferences} onLocationsUpdate={handleLocationsUpdate}/>}
+      {currentPage === 'itineraries' && <ItineraryList onBackClick={destClick} onNextClick={firstItineraryClick} locations={locations.cities} onSelectItinerary={onSelectItinerary} userPreferences={userPreferences} onLocationsUpdate={handleLocationsUpdate} generatedLocations={generatedLocations} setGeneratedLocations={setGeneratedLocations} />}
       {currentPage === "firstItineraries" && (
         <GPT onBackClick={itineraryClick} userPreferences={userPreferences} onLocationsUpdate={handleLocationsUpdate} locations={locations} selectedDestination={selectedDestination}></GPT> 
       )}
