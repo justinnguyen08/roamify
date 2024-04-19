@@ -56,3 +56,9 @@
     justify-content: right;
     margin-bottom: 2vh;
 }
+
+.selected-item {
+    background-color: #f0f0f0; /* Light grey background for visibility */
+    border-color: #007bff; /* Blue border to highlight selection */
+    color: #007bff; /* Blue text to match the border */
+}
