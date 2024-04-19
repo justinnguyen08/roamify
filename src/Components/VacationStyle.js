@@ -61,7 +61,6 @@
 //     }
 //   };
 
-
 //   return (
 //     <div className="container py-5">
 //       <div className='d-flex justify-content-between'>
@@ -91,7 +90,7 @@
 //                           {(provided) => (
 //                             <div ref={provided.innerRef}>
 //                               <ul className="list-unstyled border p-3 mb-3">
-//                                 {category.name === 'Options' && ( 
+//                                 {category.name === 'Options' && (
 //                                   <div className="inputContainer">
 //                                     <input type="text" id="newStyleName" placeholder='Add Your Own Style' />
 //                                     <button onClick={() => {
@@ -143,7 +142,6 @@
 //                   </Draggable>
 //                 ))}
 
-
 //                 {provided.placeholder}
 //               </div>
 //             )}
@@ -155,15 +153,20 @@
 // }
 // export default VacationStyle;
 
+import React, { useState } from "react";
+import Item from "./Item";
+import Popup_Content from "./Popup_Content";
+import "./rankings.css";
 
-import React, { useState } from 'react';
-import Item from './Item';
-import Popup_Content from './Popup_Content';
-import './rankings.css';
-
-function VacationStyle({ items, setItems, onHomeClick, onNextClick, addVacationStyle }) {
+function VacationStyle({
+  items,
+  setItems,
+  onHomeClick,
+  onNextClick,
+  addVacationStyle,
+}) {
   const [selectedItem, setSelectedItem] = useState(null);
-  const [newItemName, setNewItemName] = useState('');
+  const [newItemName, setNewItemName] = useState("");
 
   const handleHomeClick = () => {
     onHomeClick();
@@ -174,13 +177,18 @@ function VacationStyle({ items, setItems, onHomeClick, onNextClick, addVacationS
   };
 
   const addVacationStyleClick = (name) => {
+    document.getElementById("newStyleName").value = "";
     addVacationStyle(name);
   };
 
   const toggleItem = (id) => {
-    setItems(prevItems => prevItems.map(item =>
-      item.id === id ? { ...item, category: item.category === 1 ? 2 : 1 } : item
-    ));
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, category: item.category === 1 ? 2 : 1 }
+          : item
+      )
+    );
   };
 
   const handleItemClick = (id) => {
@@ -194,11 +202,14 @@ function VacationStyle({ items, setItems, onHomeClick, onNextClick, addVacationS
   };
 
   const swapItems = (secondItemId) => {
-    setItems(prevItems => {
-      let index1 = prevItems.findIndex(item => item.id === selectedItem);
-      let index2 = prevItems.findIndex(item => item.id === secondItemId);
+    setItems((prevItems) => {
+      let index1 = prevItems.findIndex((item) => item.id === selectedItem);
+      let index2 = prevItems.findIndex((item) => item.id === secondItemId);
       let newItems = [...prevItems];
-      [newItems[index1], newItems[index2]] = [newItems[index2], newItems[index1]];
+      [newItems[index1], newItems[index2]] = [
+        newItems[index2],
+        newItems[index1],
+      ];
       return newItems;
     });
     setSelectedItem(null);
@@ -206,60 +217,77 @@ function VacationStyle({ items, setItems, onHomeClick, onNextClick, addVacationS
 
   return (
     <div className="container py-5">
-      <div className='d-flex justify-content-between'>
+      <div className="d-flex justify-content-between">
         <button onClick={handleHomeClick}>Home</button>
         <button onClick={handleNextClick}>Next: Vacation Ventures</button>
       </div>
-      <h1 className='mainHeader'>Vacation Style</h1>
-      <div className='mainContent'>
-        <h2 className='tagline'>CLICK TO ADD AND REORDER PREFERENCES</h2>
-        <div className="prefAndOptions" style={{ marginBottom: '20px' }}>
+      <h1 className="mainHeader">Vacation Style</h1>
+      <div className="mainContent">
+        <h2 className="tagline">CLICK TO ADD AND REORDER PREFERENCES</h2>
+        <div className="prefAndOptions" style={{ marginBottom: "20px" }}>
           <h6>Preferences</h6>
           <ul className="list-unstyled border p-3">
-          {items.filter(item => item.category === 1).map((item, index) => (
-            <li
-                key={item.id}
-                onClick={() => handleItemClick(item.id)}
-                className={`mb-3 d-flex align-items-center justify-content-between border p-3 option ${selectedItem === item.id ? 'selected-item' : ''}`} // Changed here
-            >
-                <span className="rank-badge">{index + 1}</span>
-                <div style={{ flexGrow: 1, textAlign: 'center' }}>
+            {items
+              .filter((item) => item.category === 1)
+              .map((item, index) => (
+                <li
+                  key={item.id}
+                  onClick={() => handleItemClick(item.id)}
+                  className={`mb-3 d-flex align-items-center justify-content-between border p-3 option ${
+                    selectedItem === item.id ? "selected-item" : ""
+                  }`} // Changed here
+                >
+                  <span className="rank-badge">{index + 1}</span>
+                  <div style={{ flexGrow: 1, textAlign: "center" }}>
                     <Item item={item} />
-                </div>
-                <Popup_Content />
-                <button onClick={() => toggleItem(item.id)} className="btn btn-small btn-secondary" style={{ backgroundColor: 'red', color: 'white' }}>
+                  </div>
+                  <Popup_Content />
+                  <button
+                    onClick={() => toggleItem(item.id)}
+                    className="btn btn-small btn-secondary"
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
                     Remove from Preferences
-                </button>
-            </li>
-        ))}
-
+                  </button>
+                </li>
+              ))}
           </ul>
         </div>
 
         <div className="prefAndOptions">
           <h6>Options</h6>
           <ul className="list-unstyled border p-3">
-            <div className="inputContainer mb-3">
+            <div className="inputContainer">
               <input
                 type="text"
-                value={newItemName}
-                onChange={e => setNewItemName(e.target.value)}
-                placeholder='Add Your Own Style'
+                id="newStyleName"
+                placeholder="Add Your Own Style"
               />
-              <button onClick={() => addVacationStyleClick(newItemName)} className="btn">+</button>
-            </div>
-            {items.filter(item => item.category === 2).map((item) => (
-              <li
-                key={item.id}
-                onClick={() => toggleItem(item.id)}
-                className={`mb-3 d-flex align-items-center justify-content-between border p-3 option ${selectedItem === item.id ? 'selected' : ''}`}
+              <button
+                onClick={() => {
+                  const input = document.getElementById("newStyleName").value;
+                  addVacationStyleClick(input);
+                }}
               >
-                <div style={{ flexGrow: 1, textAlign: 'center' }}>
-                  <Item item={item} />
-                </div>
-                <Popup_Content />
-              </li>
-            ))}
+                +
+              </button>
+            </div>
+            {items
+              .filter((item) => item.category === 2)
+              .map((item) => (
+                <li
+                  key={item.id}
+                  onClick={() => toggleItem(item.id)}
+                  className={`mb-3 d-flex align-items-center justify-content-between border p-3 option ${
+                    selectedItem === item.id ? "selected" : ""
+                  }`}
+                >
+                  <div style={{ flexGrow: 1, textAlign: "center" }}>
+                    <Item item={item} />
+                  </div>
+                  <Popup_Content />
+                </li>
+              ))}
           </ul>
         </div>
       </div>
