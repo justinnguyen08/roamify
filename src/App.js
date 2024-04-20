@@ -145,7 +145,7 @@ const App = () => {
           </div>
           <div className="row">
             <div className="homeName col-12">
-              <d1>Roamify</d1>
+              <div className="home-logo"></div>
             </div>
           </div>
           <div className="row">

@@ -56,3 +56,14 @@
     justify-content: right;
     margin-bottom: 2vh;
 }
+
+.home-button {
+    background-image: url('../images/roamify.jpeg');
+    background-size: cover;
+    background-position: center;
+    /* Set a specific size for your logo */
+    width: 100px; /* example size, adjust as needed */
+    height: 100px; /* example size, adjust as needed */
+    border: none; /* remove border if not needed */
+    /* other styling properties as needed */
+  }

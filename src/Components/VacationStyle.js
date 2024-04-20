@@ -66,7 +66,7 @@ function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationS
   return (
     <div className="container py-5">
       <div className='d-flex justify-content-between'>
-        <button onClick={handleHomeClick} >Home</button>
+        <button className="home-button" onClick={handleHomeClick}></button>
         <button onClick={handleNextClick}>Next: Vacation Preferences</button>
       </div>
       <h1 className='mainHeader'> Vacation Style</h1>
