@@ -92,7 +92,7 @@ const App = () => {
       name: name,
       category: 2
     };
-    setVenturesItems([...venturesItems, newVentureItem]);
+    setVenturesItems([newVentureItem,...venturesItems]);
   }
 
   const [destinationsItems, setDestinationsItems] = useState([
@@ -115,7 +115,7 @@ const App = () => {
       name: name,
       category: 2
     };
-    setDestinationsItems([...destinationsItems, newDestinationItem]);
+    setDestinationsItems([newDestinationItem,...destinationsItems]);
   }
 
   const userPreferences = {

@@ -23,7 +23,7 @@ function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationS
   };
 
   const addVacationStyleClick = (name) => {
-    document.getElementById('button').value = "";
+    document.getElementById('newStyleName').value = "";
     addVacationStyle(name);
   }
 
