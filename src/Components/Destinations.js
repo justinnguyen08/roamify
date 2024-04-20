@@ -228,7 +228,7 @@ function Destinations({
   return (
     <div className="container py-5">
       <div className="d-flex justify-content-between">
-        <button onClick={handleHomeClick}>Home</button>
+        <button className="home-button" onClick={handleHomeClick}></button>
         <button onClick={handleBackClick}>Back: Vacation Ventures</button>
         <button onClick={handleNextClick}>Next: See My Itineraries!</button>
       </div>

@@ -12,9 +12,10 @@
 }
 
 .homeName{
-  text-align: center;
-  font-size: 60px;
-  font-weight: bold;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 400px; 
 }
 
 .nextPages {
@@ -25,4 +26,15 @@
 .tagline {
   text-align: center;
   font-size: 20px;
+}
+
+.home-logo {
+  background-image: url('./images/roamify.jpeg');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  width: 400px; 
+  height: 400px; 
+  border: none; 
+  display: block;
 }

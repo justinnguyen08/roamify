@@ -62,3 +62,15 @@
     border-color: #007bff; /* Blue border to highlight selection */
     color: #007bff; /* Blue text to match the border */
 }
+
+.home-button {
+    background-image: url('../images/roamify.jpeg');
+    background-size: cover;
+    background-position: center;
+    /* Set a specific size for your logo */
+    width: 100px; /* example size, adjust as needed */
+    height: 100px; /* example size, adjust as needed */
+    border: none; /* remove border if not needed */
+    /* other styling properties as needed */
+  }
+  
