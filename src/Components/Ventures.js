@@ -72,7 +72,7 @@ function Ventures({ items, setItems, onHomeClick, onBackClick, onNextClick, addV
       <div className='d-flex justify-content-between'>
         <button className="home-button" onClick={handleHomeClick}></button>
         <button onClick={handleBackClick}>Back: Vacation Style</button>
-        <button onClick={handleNextClick}>Next: Destinations</button>
+        <button onClick={handleNextClick}>Next: Vacation Preferences</button>
       </div>
       <h1 className='mainHeader'> Vacation Ventures </h1>
 

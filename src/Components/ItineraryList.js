@@ -52,7 +52,7 @@ function ItineraryList({ onBackClick, onSelectItinerary, locations, onNextClick,
   }
 
   const openai = new OpenAI({
-    apiKey: "PUT API KEY HERE",
+    apiKey: "API KEY HERE",
     dangerouslyAllowBrowser: true,
   });
 
