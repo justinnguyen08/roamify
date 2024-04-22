@@ -132,7 +132,7 @@ const App = () => {
     setLocations(newLocations);
   };
 
-  console.log("App.js, locations.cities: ", locations.cities);
+  // console.log("App.js, locations.cities: ", locations.cities);
   return (
     <div>
       {currentPage === "home" && (
@@ -149,7 +149,7 @@ const App = () => {
           </div>
           <div className="row">
             <div className="col-12 tagline">
-              <d2>Planning trips made easy</d2>
+              <d2>Planning trips made easy!</d2>
             </div>
           </div>
           <div className="row">
