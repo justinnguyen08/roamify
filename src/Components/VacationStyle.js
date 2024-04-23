@@ -45,11 +45,19 @@ function VacationStyle({
       swapItems(id);
     }
   };
-
-  const swapItems = (index1, index2) => {
-    setItems((prevItems) => {
+  
+  const swapItems = (currentIndex, direction) => {
+    const filteredItems = items.filter(item => item.category === 1);
+    const itemToMove = filteredItems[currentIndex];
+    const swapWithIndex = currentIndex + (direction === 'up' ? -1 : 1);
+    const itemToSwapWith = filteredItems[swapWithIndex];
+  
+    const realCurrentIndex = items.findIndex(item => item.id === itemToMove.id);
+    const realSwapWithIndex = items.findIndex(item => item.id === itemToSwapWith.id);
+  
+    setItems(prevItems => {
       const newItems = [...prevItems];
-      [newItems[index1], newItems[index2]] = [newItems[index2], newItems[index1]];
+      [newItems[realCurrentIndex], newItems[realSwapWithIndex]] = [newItems[realSwapWithIndex], newItems[realCurrentIndex]];
       return newItems;
     });
   };
@@ -71,24 +79,22 @@ function VacationStyle({
               .map((item, index, filteredItems) => ( 
                 <li
                   key={item.id}
-                  className={`mb-3 d-flex align-items-center justify-content-between border p-3 option ${
-                    selectedItem === item.id ? "selected-item" : ""
-                  }`}
+                  className={`mb-3 d-flex align-items-center justify-content-between border p-3 option`}
                 >
                   <span className="rank-badge">{index + 1}</span>
                   <div style={{ flexGrow: 1, textAlign: "center" }}>
                     <Item item={item} />
                   </div>
                   <div className="item-controls">
-                    <button
-                      onClick={() => index > 0 && swapItems(index, index - 1)}
+                    <button 
+                      onClick={() => index > 0 && swapItems(index, 'up')}
                       disabled={index === 0}
                       className="btn btn-small btn-secondary"
                     >
                       ↑
                     </button>
                     <button
-                      onClick={() => index < filteredItems.length - 1 && swapItems(index, index + 1)}
+                      onClick={() => index < filteredItems.length - 1 && swapItems(index, 'down')}
                       disabled={index === filteredItems.length - 1} 
                       className="btn btn-small btn-secondary"
                     >
