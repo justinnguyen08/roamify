@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Item from './Item';
-import Popup_Content from './Popup_Content';
 import './rankings.css'
 
 
@@ -126,6 +125,7 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick, 
                                           ref={provided.innerRef}
                                           {...provided.draggableProps}
                                           {...provided.dragHandleProps}
+
                                         >
                                           <li className="mb-3 d-flex align-items-center justify-content-between border p-3 option ">
                                             {/* Conditionally display rank for items in "Preferences" */}
@@ -133,7 +133,8 @@ function Destinations({ items, setItems, onBackClick, onHomeClick, onNextClick, 
                                               <span className="rank-badge">{itemIndex + 1}</span>
                                             )}
                                             <Item item={item} />
-                                            <Popup_Content />
+                                            <div className='justify-content-between'>
+                                            </div>
                                           </li>
                                         </div>
                                       )}

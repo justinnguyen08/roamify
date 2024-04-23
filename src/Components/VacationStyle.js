@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Item from './Item';
-import Popup_Content from './Popup_Content';
 import './rankings.css'
 
 function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationStyle }) {
@@ -129,7 +128,6 @@ function VacationStyle({ items, setItems, onNextClick, onHomeClick, addVacationS
                                             )}
                                             <Item item={item} />
                                             <div className='justify-content-between'>
-                                              <Popup_Content />
                                             </div>
                                           </li>
                                         </div>
